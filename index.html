@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <title>Termo Game</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <link rel="stylesheet" href="assets/css/styles.css">
+        <link rel="icon" href="assets/images/icon2.ico" type="image/x-icon">        
+    </head>
+    <body class="flex flex-col bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+        <div class="container mx-auto px-4 py-7 flex-1 flex flex-col max-w-md">
+            <header class="flex justify-between items-center mb-2 px-2">
+                <button id="help-btn" class="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                    <i class="fas fa-question-circle text-2xl"></i>
+                </button>
+                <h1 class="text-3xl font-bold text-center select-none" onclick="location.reload()">TERMO</h1>
+                <div class="flex items-center space-x-2">
+                    <button id="stats-btn" class="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                        <i class="fas fa-chart-bar text-2xl"></i>
+                    </button>
+                    <!-- 
+                    <button id="theme-toggle" class="text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white">
+                        <i id="theme-icon" class="fas fa-moon text-2xl"></i>
+                    </button> 
+                    -->
+                </div>
+            </header>
+            
+            <!-- mostrar a palavra correta ao perder -->
+            <div id="correct-word-display" class="hidden text-center py-2 mb-4 rounded bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 font-semibold">
+                A palavra era: <span id="correct-word-text"></span>
+            </div>
+            
+            <!-- gameboard -->
+            <center>
+                <div class="flex-1 flex items-center justify-center">
+                    <div id="game-board" class="grid grid-cols-5 gap-3.5 mx-auto p-4 max-w-[85vw] min-h-[18vw]">
+                    <!-- tiles e gameboard geradas pelo .js -->
+                    </div>
+                </div>
+            </center>
+            
+            <!-- teclado na tela -->
+            <div id="keyboard" class="fixed bottom-0 left-0 right-0 bg-gray-100 dark:bg-gray-900 shadow-lg pt-2 pb-4">
+                <div class="container mx-auto px-1 max-w-full sm:max-w-md">
+                    <div class="flex justify-center gap-1 px-1">
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">Q</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">w</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">E</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">R</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">T</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">Y</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">U</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">I</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">O</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">P</button>                    
+                    </div>
+                    <div class="flex justify-center gap-1 px-1 mt-1">
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">A</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">S</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">D</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">F</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">G</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">H</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">J</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">K</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">L</button>
+                        <button id="backspace-key" class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[12vw] sm:max-w-12 text-sm sm:text-base">
+                            <i class="fas fa-backspace"></i>
+                        </button>
+                    </div>
+                    <div class="flex justify-center gap-1 px-1 mt-1">
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[15vw] sm:max-w-8 text-sm sm:text-base">Z</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">X</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">C</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">V</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">B</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">N</button>
+                        <button class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[7vw] sm:max-w-8 text-sm sm:text-base">M</button>
+                        <button id="enter-key" class="keyboard-key bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 font-bold py-2 px-1 sm:py-3 sm:px-3 rounded flex-1 max-w-[20vw] sm:min-w-[120px] text-xs sm:text-lg">
+                            ENTER
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- help modal -->
+        <div id="help-modal" class="hidden modal-overlay">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4 modal-content">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-2xl font-bold dark:text-gray-100">Como jogar</h2>
+                    <button id="close-help-modal" class="text-gray-500 dark:text-gray-300 hover:text-gray-700 dark:hover:text-gray-100">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-6 text-gray-800 dark:text-gray-300">
+                    <p class="text-lg">Adivinhe a <strong>palavra secreta</strong> em 6 tentativas.</p>
+                    
+                    <div class="space-y-4">
+                        <div class="example-row">
+                            <div class="flex gap-1 mb-2">
+                                <div class="letter-tile correct">T</div>
+                                <div class="letter-tile">E</div>
+                                <div class="letter-tile">R</div>
+                                <div class="letter-tile">M</div>
+                                <div class="letter-tile">O</div>
+                            </div>
+                            <p>A letra <strong class="letter-help correct">T</strong> está na palavra<br>e na posição correta.</p>
+                        </div>
+                        
+                        <div class="example-row">
+                            <div class="flex gap-1 mb-2">
+                                <div class="letter-tile">S</div>
+                                <div class="letter-tile">O</div>
+                                <div class="letter-tile present">M</div>
+                                <div class="letter-tile">A</div>
+                                <div class="letter-tile">R</div>
+                            </div>
+                            <p>A letra <strong class="letter-help present">M</strong> está na palavra<br>mas em outra posição.</p>
+                        </div>
+                        
+                        <div class="example-row">
+                            <div class="flex gap-1 mb-2">
+                                <div class="letter-tile">P</div>
+                                <div class="letter-tile">U</div>
+                                <div class="letter-tile absent">L</div>
+                                <div class="letter-tile">G</div>
+                                <div class="letter-tile">A</div>
+                            </div>
+                            <p>A letra <strong class="letter-help absent">L</strong> não está na palavra<br>em nenhuma posição.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="pt-4 border-t border-gray-200 dark:border-gray-700 space-y-3">
+                        <p class="text-sm">🟢 Letras podem se repetir</p>
+                        <p class="text-sm">⏰ Reset diário à meia-noite (horário de Brasília)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- stats modal -->
+        <div id="stats-modal" class="hidden modal-overlay">
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-2xl font-bold">Estatísticas</h2>
+                    <button id="close-stats-modal" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div class="grid grid-cols-4 gap-4 text-center mb-6">
+                    <div>
+                        <div class="text-3xl font-bold" id="games-played">0</div>
+                        <div class="text-gray-600 dark:text-gray-400">Jogos</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold" id="win-percentage">0%</div>
+                        <div class="text-gray-600 dark:text-gray-400">Vitórias</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold" id="current-streak">0</div>
+                        <div class="text-gray-600 dark:text-gray-400">Sequência</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold" id="max-streak">0</div>
+                        <div class="text-gray-600 dark:text-gray-400">Máximo</div>
+                    </div>
+                </div>
+                
+                <h3 class="font-bold mb-2">Distribuição de tentativas</h3>
+                <div id="guess-distribution" class="space-y-2 mb-6">
+                    <!-- .js faz o fill -->
+                </div>
+
+                <div class="w-full flex justify-center">
+                    <div id="next-word-timer" class="text-center text-sm text-gray-600 dark:text-gray-400 mt-4"></div>
+                </div>
+                
+                <div class="flex justify-center">
+                    <button id="share-btn" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                        <i class="fas fa-share-alt mr-2"></i> Compartilhar
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- toast de notificação -->
+        <div id="toast" class="hidden fixed top-5 left-1/2 transform -translate-x-1/2 bg-gray-800 dark:bg-gray-700 text-white px-4 py-2 rounded shadow-lg">
+            Mensagem de notificação
+        </div>
+
+       <script src="assets/js/main.js"></script>
+       
+    </body>
+</html>
