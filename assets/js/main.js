@@ -615,8 +615,10 @@ function setupEventListeners() {
 function updateStatsModal() {
     const stats = gameState.stats;
 
-    if(gameState.showShareButton)
+    if(gameState.showShareButton){
         shareBtn.classList.remove('hidden');
+		shareBtn.addEventListener('click', shareStats);
+	}
 
     document.getElementById('games-played').textContent = stats.gamesPlayed;
     document.getElementById('win-percentage').textContent = stats.gamesPlayed > 0 
