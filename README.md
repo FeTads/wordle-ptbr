@@ -1,6 +1,7 @@
 # 🎮 Jogo Termo - Versão Brasileira (Clone do Wordle)
 
 Bem-vindo ao **Jogo wordle-ptbr**, um clone brasileiro do famoso jogo Wordle — desenvolvido com **HTML**, **JavaScript** e **Tailwind CSS**. O objetivo do jogo é adivinhar a **palavra do dia** em até 6 tentativas, com feedback visual para cada letra.
+> Este projeto foi desenvolvido exclusivamente para fins de portfólio e estudo.
 ---
 
 ## ✨ Features
@@ -32,16 +33,19 @@ Bem-vindo ao **Jogo wordle-ptbr**, um clone brasileiro do famoso jogo Wordle —
 
 ---
 
-## 📂 Estrutura do projeto
-├── index.html # HTML principal
+📂 Estrutura do projeto
+```
+.
+├── index.html
 └── assets/
-├── css/
-  └── styles.css
-├── js/
-  ├── main.js
-  └── palavras.json
-└── images/
-  └── icon2.ico
+    ├── css/
+    │   └── styles.css
+    ├── js/
+    │   ├── main.js
+    │   └── palavras.json 
+    └── images/
+        └── icon2.ico
+```
 
 ## 📝 Licença
 Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
