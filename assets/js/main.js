@@ -251,11 +251,11 @@ function updateKeyboard() {
     const keyboardKeys = keyboard.querySelectorAll('.keyboard-key');
     keyboardKeys.forEach(key => {
         const letter = key.textContent.trim().toUpperCase();
-
+        key.className = 'keyboard-key font-bold py-4 px-8 rounded flex-2 max-w-8 transition-colors';
         const isMobile = window.matchMedia("(max-width: 640px)").matches;
         key.className = `keyboard-key font-bold rounded transition-colors ${
             isMobile ? 
-            'py-4 px-2 text-sm min-w-[9vw] max-w-[12vw] transition-colors' : // no mobile estilizar o teclado diferente do pc
+            'py-3sim px-2 text-sm min-w-[9vw] max-w-[11vw] transition-colors' : // no mobile estilizar o teclado diferente do pc
             'keyboard-key font-bold py-4 px-10 rounded flex-2 max-w-10 transition-colors'
         }`;
 
@@ -400,6 +400,10 @@ function submitGuess() {
         updateStats(true);
         showToast("Parabéns! Você acertou!");
         gameState.showShareButton = true;
+		updateStatsModal();
+		setTimeout(() => {
+			statsModal.classList.remove('hidden');
+		}, 1000);
     } 
     // checka se o game acabou = gameover
     else if (gameState.currentAttempt === MAX_ATTEMPTS - 1) {
@@ -410,6 +414,10 @@ function submitGuess() {
         correctWordDisplay.classList.remove('hidden');
         showToast(`A palavra era: ${gameState.targetWord}`);
         gameState.showShareButton = true;
+		updateStatsModal();
+        setTimeout(() => {
+			statsModal.classList.remove('hidden');
+		}, 1000)
     }
     
     gameState.currentAttempt++;
@@ -700,24 +708,36 @@ function shareStats() {
     let shareText = `Joguei fetadsTerm #${stats.gamesPlayed} ${gameState.currentAttempt}/${MAX_ATTEMPTS} 🔥 ${stats.currentStreak}\n\n`;
 
     for (let i = 0; i < gameState.currentAttempt; i++) {
-        const guess = gameState.guesses[i];
-        const target = gameState.targetWord;
-        let guessDisplay = '';
+		const guess = gameState.guesses[i];
+		const target = gameState.targetWord;
+		let guessDisplay = '';
 
-        for (let j = 0; j < guess.length; j++) {
-            const letter = guess[j];
-            if (letter === target[j]) {
-                guessDisplay += '🟩';
-            } else if (target.includes(letter)) {
-                guessDisplay += '🟨';
-            } else {
-                guessDisplay += '⬛';
-            }
-        }
+		let result = Array(guess.length).fill('⬛');
+		let targetLetterCount = {};
 
-        shareText += guessDisplay + '\n';
-    }
+		for (let j = 0; j < target.length; j++) {
+			const letter = target[j];
+			targetLetterCount[letter] = (targetLetterCount[letter] || 0) + 1;
+		}
 
+		for (let j = 0; j < guess.length; j++) {
+			if (guess[j] === target[j]) {
+				result[j] = '🟩';
+				targetLetterCount[guess[j]]--;
+			}
+		}
+
+		for (let j = 0; j < guess.length; j++) {
+			if (result[j] === '⬛' && target.includes(guess[j]) && targetLetterCount[guess[j]] > 0) {
+				result[j] = '🟨';
+				targetLetterCount[guess[j]]--;
+			}
+		}
+
+		guessDisplay = result.join('');
+		shareText += guessDisplay + '\n';
+	}
+	
     const textarea = document.createElement('textarea');
     textarea.value = shareText;
     document.body.appendChild(textarea);

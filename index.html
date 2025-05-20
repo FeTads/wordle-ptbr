@@ -28,11 +28,6 @@
                 </div>
             </header>
             
-            <!-- mostrar a palavra correta ao perder -->
-            <div id="correct-word-display" class="hidden text-center py-2 mb-4 rounded bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 font-semibold">
-                A palavra era: <span id="correct-word-text"></span>
-            </div>
-            
             <!-- gameboard -->
             <center>
                 <div class="flex-1 flex items-center justify-center">
@@ -146,6 +141,10 @@
         <!-- stats modal -->
         <div id="stats-modal" class="hidden modal-overlay">
             <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-md mx-4">
+                <!-- mostrar a palavra correta ao perder -->
+                <div id="correct-word-display" class="hidden text-center py-2 mb-4 rounded bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 font-semibold">
+                    A palavra era: <span id="correct-word-text"></span>
+                </div>
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-2xl font-bold">Estatísticas</h2>
                     <button id="close-stats-modal" class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300">
